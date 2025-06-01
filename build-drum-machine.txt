@@ -1,0 +1,182 @@
+** start of index.html **
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Drum Machine</title>
+<style>
+  body {
+    background: #121212;
+    color: #eee;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+  }
+  #drum-machine {
+    background: #1f1f1f;
+    border-radius: 12px;
+    padding: 20px;
+    width: 360px;
+    box-shadow: 0 0 15px #00ffea88;
+    user-select: none;
+  }
+  #display {
+    height: 50px;
+    background: #272727;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 600;
+    font-size: 1.1rem;
+    letter-spacing: 1.2px;
+    color: #00fff9;
+  }
+  #pad-bank {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 15px;
+  }
+  .drum-pad {
+    background: #333;
+    border-radius: 10px;
+    box-shadow: 0 4px #222 inset;
+    color: #00fff9;
+    font-weight: 700;
+    font-size: 1.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80px;
+    cursor: pointer;
+    user-select: none;
+    transition: background 0.15s, box-shadow 0.15s;
+    position: relative;
+  }
+  .drum-pad:active,
+  .drum-pad.active {
+    background: #00fff9;
+    color: #121212;
+    box-shadow: 0 2px #00b3a7 inset;
+  }
+  .drum-pad audio {
+    display: none;
+  }
+  /* Add a subtle glow on active */
+  .drum-pad.active::after {
+    content: '';
+    position: absolute;
+    top: 4px; bottom: 4px; left: 4px; right: 4px;
+    border-radius: 10px;
+    box-shadow: 0 0 15px #00fff9;
+  }
+</style>
+</head>
+<body>
+<div id="drum-machine">
+  <p id="display">Press a pad or key</p>
+  <div id="pad-bank">
+    <div class="drum-pad" id="Heater-1">Q
+      <audio class="clip" id="Q" src="https://cdn.freecodecamp.org/curriculum/drum/Heater-1.mp3"></audio>
+    </div>
+    <div class="drum-pad" id="Heater-2">W
+      <audio class="clip" id="W" src="https://cdn.freecodecamp.org/curriculum/drum/Heater-2.mp3"></audio>
+    </div>
+    <div class="drum-pad" id="Heater-3">E
+      <audio class="clip" id="E" src="https://cdn.freecodecamp.org/curriculum/drum/Heater-3.mp3"></audio>
+    </div>
+    <div class="drum-pad" id="Heater-4">A
+      <audio class="clip" id="A" src="https://cdn.freecodecamp.org/curriculum/drum/Heater-4_1.mp3"></audio>
+    </div>
+    <div class="drum-pad" id="Clap">S
+      <audio class="clip" id="S" src="https://cdn.freecodecamp.org/curriculum/drum/Heater-6.mp3"></audio>
+    </div>
+    <div class="drum-pad" id="Open-HH">D
+      <audio class="clip" id="D" src="https://cdn.freecodecamp.org/curriculum/drum/Dsc_Oh.mp3"></audio>
+    </div>
+    <div class="drum-pad" id="Kick-n-Hat">Z
+      <audio class="clip" id="Z" src="https://cdn.freecodecamp.org/curriculum/drum/Kick_n_Hat.mp3"></audio>
+    </div>
+    <div class="drum-pad" id="Kick">X
+      <audio class="clip" id="X" src="https://cdn.freecodecamp.org/curriculum/drum/RP4_KICK_1.mp3"></audio>
+    </div>
+    <div class="drum-pad" id="Closed-HH">C
+      <audio class="clip" id="C" src="https://cdn.freecodecamp.org/curriculum/drum/Cev_H2.mp3"></audio>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Map keys to their sound names for display
+  const soundNames = {
+    Q: "Heater 1",
+    W: "Heater 2",
+    E: "Heater 3",
+    A: "Heater 4",
+    S: "Clap",
+    D: "Open-HH",
+    Z: "Kick-n'-Hat",
+    X: "Kick",
+    C: "Closed-HH",
+  };
+
+  const display = document.getElementById('display');
+  const drumPads = Array.from(document.getElementsByClassName('drum-pad'));
+
+  function playSound(key) {
+    const audio = document.getElementById(key);
+    if (!audio) return;
+
+    audio.currentTime = 0;  // rewind to start
+    audio.play();
+
+    display.textContent = soundNames[key];
+
+    // Add active class to pad for visual feedback
+    const pad = audio.parentElement;
+    pad.classList.add('active');
+    setTimeout(() => {
+      pad.classList.remove('active');
+    }, 150);
+  }
+
+  // Click events on drum pads
+  drumPads.forEach(pad => {
+    pad.addEventListener('click', () => {
+      const key = pad.textContent.trim();
+      playSound(key);
+    });
+  });
+
+  // Keyboard events
+  document.addEventListener('keydown', (e) => {
+    const key = e.key.toUpperCase();
+    if (soundNames.hasOwnProperty(key)) {
+      playSound(key);
+    }
+  });
+</script>
+</body>
+</html>
+
+
+** end of index.html **
+
+** start of styles.css **
+
+
+
+** end of styles.css **
+
+** start of script.js **
+
+
+
+** end of script.js **
+
